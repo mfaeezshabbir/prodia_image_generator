@@ -8,7 +8,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [jobId, setJobId] = useState(null);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
-  const [progress, setProgress] = useState(0);
+  // const [progress, setProgress] = useState(0);
   const [imageLoading, setImageLoading] = useState(false);
 
   const handleInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -30,7 +30,7 @@ const Home = () => {
     setLoading(true);
     setImageUrl("");
     setDownloadUrl(null);
-    setProgress(0);
+    // setProgress(0);
 
     try {
       const response = await fetch("/api/prodia", {
@@ -74,7 +74,7 @@ const Home = () => {
         setImageLoading(true); // Set image loading to true when image URL is set
         return true;
       } else if (data.status === "pending") {
-        setProgress((prev) => Math.min(prev + 10, 100)); // Increment progress
+        // setProgress((prev) => Math.min(prev + 10, 100)); // Increment progress
         return false;
       } else {
         throw new Error("Job status unknown");
@@ -99,12 +99,13 @@ const Home = () => {
   }, [jobId]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-lg">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-gray-100 to-gray-300">
+      <div className="w-full max-w-2xl p-8 bg-white rounded-lg shadow-lg">
+        <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Image Generator</h1>
         <div className="flex items-center mb-4">
           <input
             type="text"
-            placeholder="Type your message here..."
+            placeholder="Type your prompt here..."
             value={prompt}
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
