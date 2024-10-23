@@ -17,10 +17,10 @@ const Switch: React.FC<SwitchProps> = ({ label, checked, onChange }) => {
                     onChange={(e) => onChange(e.target.checked)}
                     className="sr-only peer"
                 />
-                <div className="w-14 h-8 bg-gray-300 rounded-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 dark:bg-gray-700 peer-checked:bg-blue-500 transition relative">
-                    <div className={`absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform ${checked ? 'transform translate-x-6' : ''}`}></div>
+                <div className="w-12 h-6 bg-gray-300 rounded-full peer-focus:outline-none dark:bg-gray-700 peer-checked:bg-blue-500 transition relative">
+                    <div className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform ${checked ? 'transform translate-x-6' : ''}`}></div>
                 </div>
-                <span className="ml-3 text-gray-700">{checked ? "On" : "Off"}</span>
+                <span className="ml-3 text-gray-700">{checked ? "Yes" : "No"}</span>
             </label>
         </div>
     );
