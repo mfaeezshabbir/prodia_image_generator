@@ -1,7 +1,7 @@
-// ImagePreview.tsx
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { BiShareAlt, BiSolidDownload } from "react-icons/bi";
+import ImageModal from "./ImageModal";  // Import the new modal component
 
 interface ImagePreviewProps {
     imageUrl: string;
@@ -9,6 +9,8 @@ interface ImagePreviewProps {
 }
 
 const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, altText }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const handleShare = () => {
         if (navigator.share) {
             navigator.share({
@@ -20,15 +22,28 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, altText }) => {
         }
     };
 
+    const handleImageClick = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div className="relative">
-            <Image
-                src={imageUrl}
-                alt={altText}
-                width={500}
-                height={500}
-                className="object-cover rounded-lg"
-            />
+            {/* Image Preview */}
+            <div onClick={handleImageClick} className="cursor-pointer">
+                <Image
+                    src={imageUrl}
+                    alt={altText}
+                    width={500}
+                    height={500}
+                    className="object-cover rounded-lg"
+                />
+            </div>
+
+            {/* Download and Share Buttons */}
             <a href={`${imageUrl}?download=1`} download={`GeneratedImage`} className="mt-2">
                 <button className="mt-4 bg-blue-500 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition" title="Download Image">
                     <BiSolidDownload size={20} />
@@ -41,6 +56,14 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, altText }) => {
             >
                 <BiShareAlt size={20} />
             </button>
+
+            {/* Image Modal */}
+            <ImageModal
+                isOpen={isModalOpen}
+                imageUrl={imageUrl}
+                altText={altText}
+                onClose={handleCloseModal}
+            />
         </div>
     );
 };
