@@ -1,24 +1,22 @@
-"use client";
 import React, { useState, useEffect } from "react";
-import Switch from "./Switch";
 import InputForm from "./InputForm";
 import ImagePreview from "./ImagePreview";
 
 const ImageGenerator = () => {
     const [prompt, setPrompt] = useState("");
-    const [numImages, setNumImages] = useState(1); // 1 or 2 images
-    const [jobIds, setJobIds] = useState<(string | null)[]>([null, null]);
+    const [numImages, setNumImages] = useState(1);
+    const [jobIds, setJobIds] = useState<string[]>([]); // Changed to dynamic array
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [imageLoading, setImageLoading] = useState([false, false]);
+    const [imageLoading, setImageLoading] = useState<boolean[]>([]);
+    const [showLoading, setShowLoading] = useState(false);
 
     const handlePromptChange = (newPrompt: string) => {
         setPrompt(newPrompt);
     };
 
-    const handleSwitchChange = (checked: boolean) => {
-        setNumImages(checked ? 2 : 1);
+    const handleNumImagesChange = (num: number) => {
+        setNumImages(num);
     };
 
     const generateImages = async () => {
@@ -28,9 +26,10 @@ const ImageGenerator = () => {
         }
 
         setLoading(true);
+        setShowLoading(true);
         setImageUrls([]);
-        setJobIds([null, null]); // Reset job IDs
-        setImageLoading([true, true]); // Show image loading for both slots initially
+        setJobIds([]); // Reset job IDs
+        setImageLoading(Array(numImages).fill(true)); // Initialize loading state for each image
 
         try {
             const responses = await Promise.all(
@@ -46,7 +45,12 @@ const ImageGenerator = () => {
             const data = await Promise.all(responses.map((res) => res.json()));
 
             if (responses.every((res) => res.ok)) {
-                setJobIds([data[0].job, data[1]?.job || null]);
+                // Store job IDs for all requested images
+                const newJobIds = data.map((item) => item.job);
+                setJobIds(newJobIds);
+                setTimeout(() => {
+                    setShowLoading(false);
+                }, 10000);
             } else {
                 alert("Failed to generate images.");
             }
@@ -109,26 +113,39 @@ const ImageGenerator = () => {
     }, [jobIds]);
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
-            <div className="w-full max-w-3xl p-8 bg-white rounded-lg shadow-lg">
+        <div className="flex flex-col md:flex-row h-screen">
+            {/* Left side: Form */}
+            <div className="md:w-1/3 h-full p-8 bg-white shadow-lg">
                 <h1 className="text-3xl font-bold text-center mb-6">AI Image Generator</h1>
-                <Switch label="Generate Two Images" checked={numImages === 2} onChange={handleSwitchChange} />
                 <InputForm
                     prompt={prompt}
                     onPromptChange={handlePromptChange}
                     onSubmit={generateImages}
                     loading={loading}
+                    numImages={numImages}
+                    onNumImagesChange={handleNumImagesChange}
                 />
-                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {loading ? (
-                        <div className="text-center col-span-2">Generating images, please wait...</div>
-                    ) : (
-                        imageUrls.map((url, idx) => (
-                            <ImagePreview key={idx} imageUrl={url} altText={`Generated Image ${idx + 1}`} />
-                        ))
-                    )}
-                </div>
             </div>
+
+            {/* Right side: Image Preview */}
+            <div className="w-full h-full p-8 bg-gray-300 overflow-auto">
+                {loading ? (
+                    <div className="text-center">Generating images, please wait...</div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {imageUrls.map((url, idx) => (
+                            <ImagePreview key={idx} imageUrl={url} altText={`Generated Image ${idx + 1}`} />
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* Loading indicator */}
+            {showLoading && (
+                <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+                    <div className="text-white">Generating images, please wait...</div>
+                </div>
+            )}
         </div>
     );
 };
