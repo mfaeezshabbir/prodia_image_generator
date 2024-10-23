@@ -1,12 +1,12 @@
-import React from 'react';
-import ImageGenerator from '../components/ImageGenerator';
+import React from "react";
+import ImageGenerator from "../components/ImageGenerator";
 
 const Page: React.FC = () => {
-    return (
-        <>
-            <ImageGenerator />
-        </>
-    );
-}
+  return (
+    <>
+      <ImageGenerator />
+    </>
+  );
+};
 
 export default Page;
