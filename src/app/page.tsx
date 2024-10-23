@@ -2,12 +2,12 @@
 "use client";
 
 import Footer from "./components/Footer";
-import ImageGenerator from "./components/ImageGenerator";
+import LandingPage from "./LandingPage";
 
 const Home = () => {
   return (
     <>
-      <ImageGenerator />
+      <LandingPage />
       <Footer />
     </>
   );

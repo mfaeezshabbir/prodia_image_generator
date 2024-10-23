@@ -15,7 +15,9 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "AI Image Generator",
-  description: "Generate images using AI",
+  description: "Generate stunning images using advanced AI algorithms. Explore the power of machine learning to create unique and high-quality visuals effortlessly.",
+  keywords: ["AI", "image generation", "machine learning", "artificial intelligence", "visuals", "creative tools", "digital art"],
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
