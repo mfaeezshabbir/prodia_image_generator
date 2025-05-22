@@ -99,8 +99,8 @@ const Home = () => {
   }, [jobId]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-gray-100 to-gray-300">
-      <div className="w-full max-w-2xl p-8 bg-white rounded-lg shadow-lg">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500">
+      <div className="w-full max-w-2xl p-8 bg-gray-100 rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Image Generator</h1>
         <div className="flex items-center mb-4">
           <input
