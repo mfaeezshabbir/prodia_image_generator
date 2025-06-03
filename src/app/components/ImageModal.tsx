@@ -33,40 +33,39 @@ const ImageModal: React.FC<ImageModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
-      <div className="relative w-full h-full">
-        <div className="flex justify-center align-center h-full">
+    <div className="fixed inset-0 bg-black/90 backdrop-blur-md flex justify-center items-center z-50">
+      <div className="relative w-full h-full max-w-5xl max-h-[90vh] mx-auto my-auto p-6">
+        <div className="flex justify-center items-center h-full">
           <Image
             src={imageUrl}
             alt={altText}
-            width={900}
-            height={900}
-            className="object-contain rounded-lg"
+            width={1200}
+            height={1200}
+            className="object-contain rounded-lg shadow-2xl max-h-[80vh]"
           />
         </div>
-        <div className="absolute top-4 right-4 flex space-x-4">
+        <div className="absolute top-6 right-6 flex space-x-3">
           <a
             href={`${imageUrl}?download=1`}
             download={`GeneratedImage`}
-            className="mt-2"
+            className="bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors"
+            title="Download Image"
           >
-            <button className="text-white text-2xl" title="Download">
-              <FiDownload />
-            </button>
+            <FiDownload size={20} />
           </a>
           <button
-            className="text-white text-2xl"
+            className="bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors"
             onClick={handleShare}
-            title="Share"
+            title="Share Image"
           >
             <FiShare2 />
           </button>{" "}
           <button
-            className="text-white text-3xl"
+            className="bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors"
             onClick={onClose}
             title="Close"
           >
-            <AiOutlineClose />
+            <AiOutlineClose size={20} />
           </button>
         </div>
       </div>

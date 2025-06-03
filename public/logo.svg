@@ -1,0 +1,46 @@
+<!-- Abstract, generative SVG logo (no text) -->
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Pearl gradient -->
+        <radialGradient id="pearl" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stop-color="#f8fafc"/>
+            <stop offset="70%" stop-color="#e0e7ef"/>
+            <stop offset="100%" stop-color="#b6bac3"/>
+        </radialGradient>
+        <!-- Swirl gradient -->
+        <linearGradient id="swirl" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#6366f1"/>
+            <stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient>
+        <!-- Glow -->
+        <radialGradient id="glow" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stop-color="#a5b4fc" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Shadow -->
+        <radialGradient id="shadow" cx="50%" cy="80%" r="60%">
+            <stop offset="0%" stop-color="#000" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+    <!-- Shadow -->
+    <ellipse cx="40" cy="66" rx="22" ry="7" fill="url(#shadow)" />
+    <!-- Glow -->
+    <circle cx="40" cy="40" r="26" fill="url(#glow)" />
+    <!-- Pearl body -->
+    <circle cx="40" cy="40" r="22" fill="url(#pearl)" stroke="#6366f1" stroke-width="2"/>
+    <!-- Shine -->
+    <ellipse cx="33" cy="33" rx="7" ry="3.5" fill="#fff" opacity="0.7"/>
+    <ellipse cx="48" cy="28" rx="3" ry="1.5" fill="#fff" opacity="0.5"/>
+    <!-- Dynamic ring -->
+    <ellipse cx="40" cy="40" rx="18" ry="18" fill="none" stroke="url(#swirl)" stroke-width="2" opacity="0.3" />
+    <!-- Abstract swirls -->
+    <path d="M22 50 Q40 70 58 50" stroke="url(#swirl)" stroke-width="3" fill="none" opacity="0.7"/>
+    <path d="M28 60 Q40 75 52 60" stroke="url(#swirl)" stroke-width="2" fill="none" opacity="0.4"/>
+    <!-- Adaptive dots (suggesting generative/creative) -->
+    <circle cx="60" cy="25" r="2.2" fill="url(#swirl)" opacity="0.8"/>
+    <circle cx="65" cy="35" r="1.2" fill="url(#swirl)" opacity="0.6"/>
+    <circle cx="55" cy="18" r="1.5" fill="url(#swirl)" opacity="0.5"/>
+    <circle cx="25" cy="22" r="1.3" fill="url(#swirl)" opacity="0.5"/>
+    <circle cx="30" cy="18" r="1" fill="url(#swirl)" opacity="0.4"/>
+</svg>

@@ -1,7 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['images.prodia.xyz'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'images.prodia.xyz',
+                pathname: '**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+                pathname: '**',
+            },
+        ],
     },
 };
 

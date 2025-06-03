@@ -4,6 +4,7 @@ import { BiShareAlt, BiSolidDownload } from "react-icons/bi";
 import ImageModal from "./ImageModal";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../utils/firebaseConfig";
+import { useAuth } from "../contexts/AuthContext";
 
 interface ImagePreviewProps {
   imageUrl: string;
@@ -39,13 +40,18 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
     setIsModalOpen(false);
   };
 
+  const { currentUser } = useAuth();
+  
   const saveToFirestore = async () => {
     try {
-      const imageDocRef = doc(db, "generatedImages", prompt);
+      // Generate a unique ID using timestamp + random string instead of just using prompt
+      const uniqueId = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+      const imageDocRef = doc(db, "generatedImages", uniqueId);
       await setDoc(imageDocRef, {
         imageUrl,
         prompt,
         timestamp: new Date().toISOString(),
+        userId: currentUser?.uid || 'anonymous',
       });
       console.log("Image saved successfully");
     } catch (error) {
@@ -55,41 +61,48 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
 
   useEffect(() => {
     saveToFirestore();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageUrl, prompt]);
 
   return (
-    <div className="relative">
+    <div className="relative group overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg">
       {/* Image Preview */}
       <div onClick={handleImageClick} className="cursor-pointer">
         <Image
           src={imageUrl}
           alt={altText}
-          width={400}
-          height={400}
-          className="object-cover rounded-lg"
+          width={500}
+          height={500}
+          className="object-cover w-full aspect-square rounded-lg transform transition-transform group-hover:scale-[1.02]"
         />
       </div>
 
-      {/* Download and Share Buttons */}
-      <a
-        href={`${imageUrl}?download=1`}
-        download={`GeneratedImage`}
-        className="mt-2"
-      >
-        <button
-          className="mt-4 bg-blue-500 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition"
-          title="Download Image"
-        >
-          <BiSolidDownload size={20} />
-        </button>
-      </a>
-      <button
-        onClick={handleShare}
-        className="mt-4 ml-2 bg-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition"
-        title="Share this image"
-      >
-        <BiShareAlt size={20} />
-      </button>
+      {/* Overlay with buttons */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-white text-sm truncate max-w-[70%]">
+            {prompt.length > 30 ? prompt.substring(0, 30) + '...' : prompt}
+          </p>
+          
+          <div className="flex gap-2">
+            <a
+              href={`${imageUrl}?download=1`}
+              download={`GeneratedImage`}
+              className="bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-colors"
+              title="Download Image"
+            >
+              <BiSolidDownload size={18} />
+            </a>
+            <button
+              onClick={handleShare}
+              className="bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-colors"
+              title="Share this image"
+            >
+              <BiShareAlt size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Image Modal */}
       <ImageModal

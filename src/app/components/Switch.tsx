@@ -4,24 +4,32 @@ interface SwitchProps {
     label: string;
     checked: boolean;
     onChange: (checked: boolean) => void;
+    description?: string;
 }
 
-const Switch: React.FC<SwitchProps> = ({ label, checked, onChange }) => {
+const Switch: React.FC<SwitchProps> = ({ label, checked, onChange, description }) => {
     return (
-        <div className="flex items-center mb-6">
-            <span className="mr-3 text-gray-700">{label}</span>
-            <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={(e) => onChange(e.target.checked)}
-                    className="sr-only peer"
-                />
-                <div className="w-12 h-6 bg-gray-300 rounded-full peer-focus:outline-none dark:bg-gray-700 peer-checked:bg-blue-500 transition relative">
-                    <div className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform ${checked ? 'transform translate-x-6' : ''}`}></div>
+        <div className="flex flex-col mb-6">
+            <div className="flex items-center justify-between">
+                <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-700">{label}</span>
+                    {description && (
+                        <span className="text-xs text-gray-500 mt-0.5">{description}</span>
+                    )}
                 </div>
-                <span className="ml-3 text-gray-700">{checked ? "Yes" : "No"}</span>
-            </label>
+                <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={(e) => onChange(e.target.checked)}
+                        className="sr-only peer"
+                        aria-label={label}
+                    />
+                    <div className="w-11 h-6 bg-gray-200 rounded-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 peer-checked:bg-indigo-600 transition-colors relative">
+                        <div className={`absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${checked ? 'translate-x-5' : ''}`}></div>
+                    </div>
+                </label>
+            </div>
         </div>
     );
 };

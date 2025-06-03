@@ -2,7 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --foreground-rgb: 17, 24, 39;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 249, 250, 251;
+    --accent-color: 79, 70, 229;
+    --accent-color-hover: 67, 56, 202;
+    --surface-color: 255, 255, 255;
+    --border-color: 229, 231, 235;
+}
 
-:root:-webkit-scrollbar {
-    display: none;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-start-rgb));
+    min-height: 100vh;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    transition: all 0.3s ease;
+}
+
+.gradient-bg:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+}
+
+.animate-gradient-bg {
+    background: linear-gradient(-45deg, #8b5cf6, #6366f1, #3b82f6, #7c3aed);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.text-gradient {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, #8b5cf6, #3b82f6);
+}
+
+.text-gradient-animated {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, #8b5cf6, #3b82f6, #8b5cf6);
+    background-size: 200% auto;
+    animation: textShimmer 3s linear infinite;
+}
+
+@keyframes textShimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(243, 244, 246);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(156, 163, 175);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(107, 114, 128);
 }

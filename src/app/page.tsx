@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import Footer from "./components/Footer";
+import AppLayout from "./AppLayout";
 import LandingPage from "./LandingPage";
 
 const Home = () => {
   return (
-    <>
+    <AppLayout>
       <LandingPage />
-      <Footer />
-    </>
+    </AppLayout>
   );
 };
 

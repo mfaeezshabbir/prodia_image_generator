@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { AuthProvider } from "./contexts/AuthContext";
+import ToasterProvider from "./components/ToasterProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,10 +16,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "AI Image Generator",
+  title: "ProdiaStudio | AI Image Generation",
   description: "Generate stunning images using advanced AI algorithms. Explore the power of machine learning to create unique and high-quality visuals effortlessly.",
   keywords: ["AI", "image generation", "machine learning", "artificial intelligence", "visuals", "creative tools", "digital art"],
-  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
@@ -27,10 +28,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/x-icon" href="/logo.svg" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AuthProvider>
+          <ToasterProvider />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

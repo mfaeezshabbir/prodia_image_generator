@@ -45,10 +45,10 @@ const TypeEffect: React.FC<TypeEffectProps> = ({
     ); // Speed is faster for deletion
 
     return () => clearTimeout(timeout); // Cleanup timeout
-  }, [subIndex, index, isDeleting, pause]);
+  }, [subIndex, index, isDeleting, pause, textArray, delay, typingSpeed]);
 
   return (
-    <div className="text-4xl font-bold text-white">
+    <div className="inline">
       <span>{`${displayText}${
         subIndex === textArray[index].length ? "" : "|"
       }`}</span>
